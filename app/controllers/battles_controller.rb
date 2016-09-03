@@ -38,6 +38,53 @@ class BattlesController < ActionController::Base
     redirect_to battles_path
   end
 
+  def stats
+    battle_types = Battle.select("distinct(battle_type)").
+      map(&:battle_type) - [nil]
+    hash = {
+      most_active: {
+        attacker_king: Battle.highest_freq(:attacker_king),
+        defender_king: Battle.highest_freq(:defender_king),
+        region: Battle.highest_freq(:region),
+        name: Battle.highest_freq(:name)
+      },
+      attacker_outcome: {
+        win: Battle.where(attacker_outcome: 'win').count,
+        loss: Battle.where(attacker_outcome: 'loss').count
+      },
+      battle_type: battle_types,
+      defender_size: {
+        average: Battle.average(:defender_size).to_i,
+        min: Battle.maximum(:defender_size),
+        max: Battle.minimum(:defender_size)
+      }
+    }
+    render json: hash, status: 200
+  end
+
+  def list
+    places = Battle.where.not(location: nil).distinct.pluck(:location)
+    render json: {places: places}, status: 200
+  end
+
+  def count
+    render json: { count: Battle.count }, status: 200
+  end
+
+  def search
+    results = Battle.all
+    searchable = [:name, :attacker_king, :defender_king, :location, :battle_type]
+    searchable.each do |s|
+      if params.has_key?(s)
+        results = results.search(s, params[s])
+      end
+    end
+    render json: {
+      count: results.count,
+      battles: results.order(:battle_number)
+    }, status: 200
+  end
+
   private
 
   def battle_params
