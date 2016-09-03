@@ -1,0 +1,17 @@
+<%= form_for @battle do |form| %>
+  <% @atrs.each do |atr| %>
+    <%= "#{atr.to_s.capitalize}" %>
+    <%= form.text_field atr %></br>
+    <%= "#{atr.to_s.capitalize} #{@battle.errors[atr]}" unless @battle.errors[atr].empty? %></br>
+  <% end %>
+  <%= "Attacker Outcome" %>
+  <%= form.radio_button(:attacker_outcome, :win) %> Win
+  <%= form.radio_button(:attacker_outcome, :loss) %> Loss</br>
+  <%= "Summer" %>
+  <%= form.radio_button(:summer, :true) %> true
+  <%= form.radio_button(:summer, :false) %> false</br>
+  <%= "Note" %>
+  <%= form.text_area :note %></br>
+  <%= form.submit %>
+<% end %>
+<%= link_to 'Cancel', battles_path %>

@@ -10,6 +10,8 @@ default: &default
   host: localhost
   port: 5432
   database: toppr_got
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
 
 production:
   <<: *default

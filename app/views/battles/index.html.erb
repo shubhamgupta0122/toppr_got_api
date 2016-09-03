@@ -1,0 +1,22 @@
+<h1>List of Battles</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+
+  <% @battles.each do |battle| %>
+    <tr>
+      <td><%= link_to battle.name, battle %></td>
+      <td>
+        <%= link_to 'Edit', edit_battle_path(battle.battle_number) %>
+        <%= link_to 'Delete', battle, :method => 'delete' %>
+      </td>
+    </tr>
+  <% end -%>
+</table>
+
+<p><%= link_to 'New Battle', new_battle_path %></p>

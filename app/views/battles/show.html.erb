@@ -1,0 +1,13 @@
+<h1><%= @battle.name %></h1>
+
+<table border='1'>
+<% @battle.attributes.each do |key,val| %>
+  <tr id=<%= key %>>
+    <td><%= key.to_s.capitalize %></td>
+    <td><%= val %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Edit', edit_battle_path %>
+<%= link_to 'Back to home', battles_path %>
