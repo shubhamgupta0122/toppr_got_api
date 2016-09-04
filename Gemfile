@@ -14,7 +14,6 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'byebug'
-  gem 'irbtools',                                       require: 'irbtools/binding'
   gem 'awesome_print'
   gem 'capistrano', '~> 3.5.0'
   gem 'capistrano-bundler', '~> 1.1.2'
