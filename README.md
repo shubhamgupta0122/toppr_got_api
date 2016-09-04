@@ -11,7 +11,7 @@ pre-requisites: ruby 2.3.1, rails 2.4.7, postgres
  * run `rake import:battles` to import the data from db/battles.csv into the DB
 
 **Demo Url**
-[www.shubham2.info](www.shubham2.info)
+[www.shubham2.info](http://www.shubham2.info)
 deployed on AWS EC2
 running on nginx + passenger
 
