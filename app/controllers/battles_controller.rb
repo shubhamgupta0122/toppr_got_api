@@ -1,9 +1,38 @@
 class BattlesController < ActionController::Base
   before_action :load_battle, only: [:show, :update, :destroy, :edit]
   before_action :load_atrs,   only: [:show, :edit]
+  layout 'application'
 
   def index
     @battles = Battle.all.order(:battle_number)
+
+    respond_to do |format|
+
+      format.html
+
+      format.json {
+        limit = (params[:limit] || 10).to_i
+        offset = (params[:offset] || 0).to_i
+
+        total_count = Battle.count
+        battles = Battle.order(:battle_number).
+          offset(offset).limit(limit)
+
+        has_more = total_count - battles.size
+        if has_more > 0
+          new_offset = offset + limit
+          next_url = "#{request.base_url+request.path}?offset=#{new_offset}&limit=#{limit}"
+        else
+          next_url = nil
+        end
+
+        render json: {
+          battles: battles,
+          next: next_url
+        }, status: 200
+      }
+
+    end
   end
 
   def new
@@ -11,31 +40,73 @@ class BattlesController < ActionController::Base
   end
 
   def create
-    @battle = Battle.new(battle_params)
-    if @battle.save
-      redirect_to battles_path
-    else
-      render action: 'new'
+    battle = Battle.new(battle_params)
+    respont_to do |format|
+      format.html {
+        if battle.save
+          redirect_to battles_path
+        else
+          render action: 'new'
+        end
+      }
+      format.json {
+        if battle.save
+          render json: @battle, status: 200
+        else
+          render json: @battle.errors, status: 422
+        end
+      }
     end
   end
 
   def show
+    respond_to do |format|
+      format.html
+
+      format.json {
+        render json: @battle, status: 200
+      }
+    end
   end
 
   def edit
   end
 
   def update
-    if @battle.update(battle_params)
-      redirect_to battles_path
-    else
-      render action: 'edit'
+    respond_to do |format|
+      format.html {
+        if @battle.update(battle_params)
+          redirect_to battles_path
+        else
+          render action: 'edit'
+        end
+      }
+
+      format.json {
+        if @battle.update(battle_params)
+          render json: @battle, status: 200
+        else
+          render json: @battle.errors, status: 422
+        end
+      }
     end
   end
 
   def destroy
-    @battle.destroy
-    redirect_to battles_path
+    respond_to do |format|
+      format.html {
+        @battle.destroy
+        redirect_to battles_path
+      }
+
+      format.json {
+        if @battle.destroy
+          render json: {success: true}, status: 200
+        else
+          render json: @battle.errors, status: 422
+        end
+      }
+    end
   end
 
   def stats
