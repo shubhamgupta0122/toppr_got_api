@@ -1,6 +1,6 @@
 class BattlesController < ActionController::Base
   before_action :load_battle, only: [:show, :update, :destroy, :edit]
-  before_action :load_atrs,   only: [:show, :edit]
+  before_action :load_atrs,   only: [:show, :edit, :new]
   layout 'application'
 
   def index
