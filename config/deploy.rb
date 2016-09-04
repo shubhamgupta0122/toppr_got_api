@@ -3,6 +3,7 @@ lock '3.5.0'
 
 set :application, 'toppr_got_api'
 set :repo_url, 'git@github.com:shubhamgupta0122/toppr_got_api.git'
+set :rbenv_ruby, '2.3.1p112'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
