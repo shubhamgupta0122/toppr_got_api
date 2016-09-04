@@ -15,7 +15,7 @@ group :development do
   gem 'byebug'
   gem 'irbtools',                                       require: 'irbtools/binding'
   gem 'awesome_print'
-  gem 'capistrano', '~> 3.1.0'
+  gem 'capistrano', '~> 3.5.0'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rails', '~> 1.1.1'
   gem 'capistrano-rbenv', github: "capistrano/rbenv"
