@@ -6,7 +6,6 @@
 
 # Ignore bundler config.
 /.bundle
-/.yardoc
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -16,3 +15,6 @@
 /log/*
 !/log/.keep
 /tmp
+
+/.yardoc
+/config/deploy/*
